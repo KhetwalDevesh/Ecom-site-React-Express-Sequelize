@@ -25,7 +25,7 @@ const addProduct = async (req,res)=>{
 // get all products
 
 const getAllProducts = async (req, res) => {
-
+    console.log(req.query);
     let products = await Product.findAll({})
     res.status(200).send(products)
 
