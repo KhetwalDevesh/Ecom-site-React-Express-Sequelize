@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(cors());
 app.use('/api/products',router);
 app.get('/ping',(req,res)=>{
-    console.log("pong");
+    res.send("pong");
 })
 app.listen(process.env.PORT,()=>{
     console.log(`Server running on port no. ${process.env.PORT}`);
