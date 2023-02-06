@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect } from 'react';
-import { baseURL } from './Products';
 import { Link } from 'react-router-dom';
 import  useStore  from '../globalStore';
 import Cart from './Cart';
-
+const baseURL = "https://ecom-sql-backend.onrender.com";
 const ProductDetails = () => {
   const { cartItems, addItemToCart, removeItemFromCart } = useStore();
   const [productDetail, setProductDetail] = useState();
@@ -21,6 +20,7 @@ const ProductDetails = () => {
       try {
         const productData = await axios.get(`${baseURL}/${params.id}`);
         setProductDetail(productData.data);
+        console.log(productDetail)
       } catch (error) {
         console.log(error);
       }

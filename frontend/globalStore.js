@@ -2,12 +2,31 @@ import {create} from 'zustand';
 import { persist, devtools } from 'zustand/middleware';
 let useStore = (set, get) => ({
   totalItemsInCart: 0,
+  typeFilters:[],
+  costFilters:[],
   cartItems: [],
   filterItems:[],
 
-  addFilterItem:({})=>{
-
+  addTypeFilterItem:({item})=>{
+    console.log(item);
+    const itemsInTypeFilter = get().typeFilters;
+    const updatedTypeFilters = [...itemsInTypeFilter,item];
+    set({
+      typeFilters:updatedTypeFilters,
+    });
   },
+
+  removeTypeFilterItem:({item})=>{
+    const updatedFilterItems = get().typeFilters.map((filterItem) => {
+      if (filterItem !== item) return filterItem;
+    });
+    // console.log(updatedCart, 'updatedCart');
+    const updatedTypeFilters = updatedFilterItems.filter((item) => {
+      return item !== undefined;
+    });
+    set({ typeFilters: updatedTypeFilters });
+  },
+
   addItemToCart: ({ item }) => {
     // const totalItemsInCart = get().totalItemsInCart + 1;
     console.log(item);

@@ -25,8 +25,21 @@ const addProduct = async (req,res)=>{
 // get all products
 
 const getAllProducts = async (req, res) => {
-    console.log(req.query);
-    let products = await Product.findAll({})
+    console.log(req.query.type);
+    const types = req.query.type;
+    let products;
+    if(!types)
+    {
+        products = await Product.findAll({});
+    }
+    else
+    {
+        products = await Product.findAll({
+            where:{
+                type:types
+            }
+        })
+    }
     res.status(200).send(products)
 
 }

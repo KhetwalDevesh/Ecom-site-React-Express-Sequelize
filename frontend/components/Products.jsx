@@ -1,14 +1,34 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-export const baseURL = "http://localhost:5000/api/products/allProducts?type=Sneakers";
+import useStore from '../globalStore';
+let baseURL;
+// baseURL = "http://localhost:5000/api/products/allProducts";
+// const tempBaseURL = "http://localhost:5000/api/products/allProducts";
+baseURL = "https://ecom-sql-backend.onrender.com";
+const tempBaseURL = "https://ecom-sql-backend.onrender.com";
 const Products = () => {
+    const {typeFilters,costFilters} = useStore();
     const [products,setProducts] = useState([]);
-    const [filterArray,setFilterArray] = useState([]);
+    const [loading,setLoading] = useState(false);
+    const [typeFilter,setTypeFilter] = useState([]);
+    const [costFilter,setCostFilter] = useState([]);
+
+    if(typeFilters.length)
+          {
+            baseURL=tempBaseURL;
+            baseURL+='?'
+            typeFilters.forEach((type)=>{
+            baseURL+=`type[]=${type}&`;
+            });
+          }
+          
     useEffect(()=>{
       async function fetchProducts(){
         try{
+          setLoading(true);
           const res = await axios.get(baseURL);
+          setLoading(false);
           const resData = [...res.data];
           setProducts(resData);
           console.log(products);
@@ -18,11 +38,12 @@ const Products = () => {
           console.log(error);
         }
       }
-                fetchProducts();
-    },[]);
+      fetchProducts();
+    },[typeFilters]);
   return (
     <div className='store-products-container'>
       <span className='shoe-header'>Shoes</span>
+      {loading?<div className='loading'>Loading...</div>:<></>}
     <div className='store-products'>
       {products.map((product) => {
         return (
