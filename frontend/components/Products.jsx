@@ -5,8 +5,8 @@ import useStore from '../globalStore';
 let baseURL;
 // baseURL = "http://localhost:5000/api/products/allProducts";
 // const tempBaseURL = "http://localhost:5000/api/products/allProducts";
-baseURL = "https://ecom-sql-backend.onrender.com";
-const tempBaseURL = "https://ecom-sql-backend.onrender.com";
+baseURL = "innocenti.onrender.com/products";
+const tempBaseURL = "innocenti.onrender.com/products";
 const Products = () => {
     const {typeFilters,costFilters} = useStore();
     const [products,setProducts] = useState([]);
@@ -35,6 +35,7 @@ const Products = () => {
         }
         catch(error)
         {
+          console.log("here");
           console.log(error);
         }
       }
